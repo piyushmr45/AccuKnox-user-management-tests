@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { AdminPage } from '../pages/AdminPage';
 
-// --- Test Data ---
+
 const credentials = {
     username: 'Admin',
     password: 'admin123'
@@ -58,13 +58,13 @@ test.describe.serial('OrangeHRM - Admin User Management Workflow', () => {
 
     test('3. Should edit the new user\'s status', async () => {
         // The previous test already searched for the user, so they are visible.
-        // *** FIX: Calling the correct function to edit the status ***
+        
         await adminPage.editUserStatus(updatedStatus);
 
         // Search for the user again to see the updated result
         await adminPage.searchUser(newUserDetails.username);
 
-        // *** FIX: Verifying the status was changed in the table row ***
+        
         const userRow = page.getByRole('row').filter({ hasText: newUserDetails.username });
         await expect(userRow).toContainText(updatedStatus);
     });
