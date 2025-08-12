@@ -1,15 +1,15 @@
 // pages/AdminPage.js
 
 export class AdminPage {
-    /**
-     * @param {import('@playwright/test').Page} page
+    /*
+      @param {import('@playwright/test').Page} page
      */
     constructor(page) {
         this.page = page;
         // Selector for the 'Admin' link in the main navigation menu
         this.adminMenu = page.locator('a').filter({ hasText: 'Admin' });
         
-        // --- Add/Edit User Form Elements ---
+        
         this.addUserButton = page.getByRole('button', { name: ' Add' });
         this.addUserHeader = page.getByRole('heading', { name: 'Add User' });
         this.editUserHeader = page.getByRole('heading', { name: 'Edit User' });
@@ -25,7 +25,7 @@ export class AdminPage {
         this.confirmPasswordInput = page.locator('input[type="password"]').nth(1);
         this.saveButton = page.getByRole('button', { name: 'Save' });
         
-        // --- Search and Table Elements ---
+        
         this.usernameSearchInput = page.locator('.oxd-table-filter').locator('input').first();
         this.searchButton = page.getByRole('button', { name: 'Search' });
         this.recordFoundText = page.locator('span.oxd-text').filter({ hasText: '(1) Record Found' });
@@ -33,24 +33,24 @@ export class AdminPage {
         this.editButton = page.getByRole('button', { name: '' });
         this.deleteButton = page.getByRole('button', { name: '' });
         
-        // --- Modals and Toasts ---
+        
         this.confirmDeleteButton = page.getByRole('button', { name: 'Yes, Delete' });
         this.successToast = page.locator('.oxd-toast').filter({ hasText: 'Success' });
     }
 
-    /**
-     * Navigates to the Admin page (User Management) by clicking the 'Admin' menu item.
+    /*
+      Navigates to the Admin page (User Management) by clicking the 'Admin' menu item.
      */
     async navigateToAdmin() {
         await this.adminMenu.click();
     }
 
-    /**
-     * Adds a new user.
-     * @param {object} userData
-     * @param {string} userData.employeeName
-     * @param {string} userData.username
-     * @param {string} userData.password
+    /*
+      Adds a new user.
+      @param {object} userData
+      @param {string} userData.employeeName
+      @param {string} userData.username
+      @param {string} userData.password
      */
     async addUser(userData) {
         await this.addUserButton.click();
@@ -75,9 +75,9 @@ export class AdminPage {
         await this.page.waitForURL('**/admin/viewSystemUsers');
     }
 
-    /**
-     * Searches for a user by username.
-     * @param {string} username
+    /*
+      Searches for a user by username.
+      @param {string} username
      */
     async searchUser(username) {
         await this.usernameSearchInput.fill(username);
@@ -85,9 +85,9 @@ export class AdminPage {
         await this.page.locator('.oxd-table-loader').waitFor({ state: 'hidden' });
     }
 
-    /**
-     * Edits the status of the first user found in the search results.
-     * @param {string} newStatus - The new status to set (e.g., 'Disabled').
+    /*
+      Edits the status of the first user found in the search results.
+      @param {string} newStatus - The new status to set (e.g., 'Disabled').
      */
     async editUserStatus(newStatus) {
         await this.editButton.first().click();
@@ -101,8 +101,8 @@ export class AdminPage {
         await this.page.waitForURL('**/admin/viewSystemUsers');
     }
 
-    /**
-     * Deletes the first user found in the search results.
+    /*
+      Deletes the first user found in the search results.
      */
     async deleteUser() {
         await this.deleteButton.first().click();
@@ -110,9 +110,9 @@ export class AdminPage {
         await this.successToast.waitFor({ state: 'visible' });
     }
 
-    /**
-     * Verifies that no records are found for a given username.
-     * @param {string} username
+    /*
+      Verifies that no records are found for a given username.
+      @param {string} username
      */
     async verifyUserDeleted(username) {
         await this.successToast.waitFor({ state: 'hidden' });
